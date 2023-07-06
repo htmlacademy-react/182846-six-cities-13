@@ -1,4 +1,4 @@
-import MainScreen from '../../pages/main-screen/main-screen';
+import Main from '../../pages/main/main';
 
 type AppProps = {
   offers: number;
@@ -6,7 +6,7 @@ type AppProps = {
 
 function App({offers}: AppProps): JSX.Element {
   return (
-    <MainScreen offers={offers} />
+    <Main offers={offers} />
   );
 }
 

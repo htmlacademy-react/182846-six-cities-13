@@ -1,10 +1,10 @@
 import CitiesCard from '../../components/cities-card/cities-card';
 
-type MainScreenProps = {
+type MainProps = {
   offers: number;
 }
 
-function MainScreen({offers}: MainScreenProps): JSX.Element {
+function Main({offers}: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -112,4 +112,4 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
   );
 }
 
-export default MainScreen;
+export default Main;
