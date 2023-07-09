@@ -1,4 +1,4 @@
-import CitiesCard from '../../components/cities-card/cities-card';
+import OfferCard from '../../components/offer-card/offer-card';
 
 type MainProps = {
   offers: number;
@@ -95,11 +95,11 @@ function Main({offers}: MainProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CitiesCard />
-                <CitiesCard />
-                <CitiesCard />
-                <CitiesCard />
-                <CitiesCard />
+                <OfferCard />
+                <OfferCard />
+                <OfferCard />
+                <OfferCard />
+                <OfferCard />
               </div>
             </section>
             <div className="cities__right-section">

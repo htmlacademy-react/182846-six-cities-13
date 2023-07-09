@@ -1,3 +1,3 @@
-export const Settings = {
-  offers: 500
-};
+export const enum Settings {
+  offers = 500
+}

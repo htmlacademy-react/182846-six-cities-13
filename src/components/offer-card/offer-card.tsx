@@ -1,4 +1,4 @@
-function CitiesCard(): JSX.Element {
+function OfferCard(): JSX.Element {
   return (
     <article className="cities__card place-card">
       <div className="place-card__mark">
@@ -37,4 +37,4 @@ function CitiesCard(): JSX.Element {
   );
 }
 
-export default CitiesCard;
+export default OfferCard;
