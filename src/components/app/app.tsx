@@ -17,7 +17,7 @@ function App({offers}: AppProps): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route
-          path={AppRoute.Main}
+          index
           element={<Main offers={offers} />}
         />
         <Route
@@ -32,10 +32,12 @@ function App({offers}: AppProps): JSX.Element {
           path={AppRoute.Login}
           element={<Login />}
         />
-        <Route
-          path={AppRoute.Offer}
-          element={<Offer />}
-        />
+        <Route path={AppRoute.Offer}>
+          <Route
+            path=':id'
+            element={<Offer />}
+          />
+        </Route>
         <Route
           path='*'
           element={<NotFoundScreen />}
