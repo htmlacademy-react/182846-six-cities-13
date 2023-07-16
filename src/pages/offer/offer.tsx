@@ -5,9 +5,13 @@ import FormComment from '../../components/form-comment/form-comment';
 type OfferProps = {
   offers: Offers;
 }
-function Offer({offers}: OfferProps): JSX.Element {
+function Offer({offers}: OfferProps): JSX.Element | null {
   const params = useParams();
   const offer = offers.find((el) => el.id === params.id);
+
+  if (!offer) {
+    return null;
+  }
 
   return (
     <div className="page">
@@ -66,13 +70,13 @@ function Offer({offers}: OfferProps): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {offer?.isPremium &&
+              {offer.isPremium &&
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {offer?.title}
+                  {offer.title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -83,14 +87,14 @@ function Offer({offers}: OfferProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{width: `${Math.round(offer.rating) * 100 / 5}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{offer?.rating}</span>
+                <span className="offer__rating-value rating__value">{Math.round(offer.rating)}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {offer?.type}
+                  {offer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   3 Bedrooms
@@ -100,7 +104,7 @@ function Offer({offers}: OfferProps): JSX.Element {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{offer?.price}</b>
+                <b className="offer__price-value">&euro;{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
