@@ -5,16 +5,16 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import Offer from '../../pages/offer/offer';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import PrivateRoute from '../private-route/private-route';
-import { Offers } from '../../types/offer';
-
+import { Offers, City } from '../../types/offer';
 import Main from '../../pages/main/main';
 
 type AppProps = {
   offersCount: number;
   offers: Offers;
+  city: City;
 }
 
-function App({offersCount, offers}: AppProps): JSX.Element {
+function App({offersCount, offers, city}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -24,6 +24,7 @@ function App({offersCount, offers}: AppProps): JSX.Element {
             <Main
               offersCount={offersCount}
               offers={offers}
+              city={city}
             />
           }
         />
