@@ -8,7 +8,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   city: City;
   points: Offers;
-  selectedPoint: Offer | undefined;
+  selectedPoint?: Offer;
 }
 
 const defaultCustomIcon = new Icon({
