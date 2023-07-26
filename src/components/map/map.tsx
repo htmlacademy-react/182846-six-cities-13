@@ -4,6 +4,7 @@ import useMap from '../../hooks/use-map';
 import { City, Offer, Offers } from '../../types/offer';
 import { UrlMarker } from '../../const';
 import 'leaflet/dist/leaflet.css';
+import './map.css';
 
 type MapProps = {
   city: City;
@@ -53,9 +54,9 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
   }, [map, points, selectedPoint]);
 
   return (
-    <section
+    <div
       ref={mapRef}
-      className="cities__map map"
+      className="map"
     />
   );
 }

@@ -6,15 +6,17 @@ import Offer from '../../pages/offer/offer';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import { Offers, City } from '../../types/offer';
+import { Reviews } from '../../types/review';
 import Main from '../../pages/main/main';
 
 type AppProps = {
   offersCount: number;
   offers: Offers;
   city: City;
+  reviews: Reviews;
 }
 
-function App({offersCount, offers, city}: AppProps): JSX.Element {
+function App({offersCount, offers, city, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -43,7 +45,13 @@ function App({offersCount, offers, city}: AppProps): JSX.Element {
         <Route path={AppRoute.Offer}>
           <Route
             path=':id'
-            element={<Offer offers={offers} />}
+            element={
+              <Offer
+                offers={offers}
+                reviews={reviews}
+                city={city}
+              />
+            }
           />
         </Route>
         <Route

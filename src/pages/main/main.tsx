@@ -110,16 +110,19 @@ function Main({offersCount, offers, city}: MainProps): JSX.Element {
                 </ul>
               </form>
               <OfferList
+                type='cities'
                 offers={offers}
                 onListItemHover={handleListItemHover}
               />
             </section>
             <div className="cities__right-section">
-              <Map
-                city={city}
-                points={offers}
-                selectedPoint={selectedPoint}
-              />
+              <section className="cities__map">
+                <Map
+                  city={city}
+                  points={offers}
+                  selectedPoint={selectedPoint}
+                />
+              </section>
             </div>
           </div>
         </div>
