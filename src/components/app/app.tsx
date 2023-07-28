@@ -4,30 +4,27 @@ import Login from '../../pages/login/login';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import Offer from '../../pages/offer/offer';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import { useAppSelector } from '../../hooks';
 import PrivateRoute from '../private-route/private-route';
-import { Offers, City } from '../../types/offer';
+import { City } from '../../types/offer';
 import { Reviews } from '../../types/review';
 import Main from '../../pages/main/main';
 
 type AppProps = {
-  offersCount: number;
-  offers: Offers;
   city: City;
   reviews: Reviews;
 }
 
-function App({offersCount, offers, city, reviews}: AppProps): JSX.Element {
+function App({city, reviews}: AppProps): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           index
           element={
-            <Main
-              offersCount={offersCount}
-              offers={offers}
-              city={city}
-            />
+            <Main city={city} />
           }
         />
         <Route
