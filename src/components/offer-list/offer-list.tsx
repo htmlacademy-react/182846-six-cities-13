@@ -10,9 +10,7 @@ type OfferListProps = {
 
 function OfferList({type, offers, onListItemHover}: OfferListProps): JSX.Element {
   const handleCardHover = (id: string) => {
-    if (onListItemHover) {
-      onListItemHover(id);
-    }
+    onListItemHover?.(id);
   };
 
   const offerListClass = classNames({

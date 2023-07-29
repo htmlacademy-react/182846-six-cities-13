@@ -49,7 +49,7 @@ function PlaceSort() {
       </span>
       <ul className={placeSortClass}>
         {filterList.map((item, i) => {
-          const keyValue = `filter-${i}`;
+          const keyValue = `${item.name}-${i}`;
           return (
             <li
               key={keyValue}

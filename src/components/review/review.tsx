@@ -1,14 +1,10 @@
 import { Review } from '../../types/review';
+import { months } from '../../const';
 
 type ReviewProps = Review;
 
 function ReviewCard({date, user, comment, rating }: ReviewProps): JSX.Element {
   const formatDate = (dateString: string): string => {
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-
     const currentDate = new Date(dateString);
     const day = currentDate.getDate();
     const month = months[currentDate.getMonth()];
