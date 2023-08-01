@@ -6,17 +6,23 @@ import Offer from '../../pages/offer/offer';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import { useAppSelector } from '../../hooks';
 import PrivateRoute from '../private-route/private-route';
-import { City } from '../../types/offer';
 import { Reviews } from '../../types/review';
 import Main from '../../pages/main/main';
+import LoadingScreen from '../../pages/loading-screen.tsx/loading-screen';
 
 type AppProps = {
-  city: City;
   reviews: Reviews;
 }
 
-function App({city, reviews}: AppProps): JSX.Element {
+function App({reviews}: AppProps): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
+  const isQuestionsDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (isQuestionsDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -24,7 +30,7 @@ function App({city, reviews}: AppProps): JSX.Element {
         <Route
           index
           element={
-            <Main city={city} />
+            <Main />
           }
         />
         <Route
@@ -46,7 +52,6 @@ function App({city, reviews}: AppProps): JSX.Element {
               <Offer
                 offers={offers}
                 reviews={reviews}
-                city={city}
               />
             }
           />

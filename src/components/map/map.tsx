@@ -47,11 +47,19 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
           .addTo(markerLayer);
       });
 
+      map.flyTo(
+        [
+          city.location.latitude,
+          city.location.longitude,
+        ],
+        city.location.zoom
+      );
+
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint]);
+  }, [map, points, selectedPoint, city]);
 
   return (
     <div
