@@ -1,17 +1,12 @@
 import { useState } from 'react';
 import OfferList from '../../components/offer-list/offer-list';
-import { Offer, City } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import Map from '../../components/map/map';
 import CityList from '../../components/city-list/city-list';
-import { CitysList } from '../../const';
 import PlaceSort from '../../components/place-sort/place-sort';
 import { useAppSelector } from '../../hooks';
 
-type MainProps = {
-  city: City;
-}
-
-function Main({city}: MainProps): JSX.Element {
+function Main(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
@@ -61,8 +56,7 @@ function Main({city}: MainProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <CityList
-              citys={CitysList}
-              currentCity={activeCity}
+              currentCity={activeCity.name}
             />
           </section>
         </div>
@@ -70,7 +64,7 @@ function Main({city}: MainProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{sortOffers.length} places to stay in {activeCity}</b>
+              <b className="places__found">{sortOffers.length} places to stay in {activeCity.name}</b>
               <PlaceSort />
 
               <OfferList
@@ -82,7 +76,7 @@ function Main({city}: MainProps): JSX.Element {
             <div className="cities__right-section">
               <section className="cities__map">
                 <Map
-                  city={city}
+                  city={activeCity}
                   points={sortOffers}
                   selectedPoint={selectedPoint}
                 />

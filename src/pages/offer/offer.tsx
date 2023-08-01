@@ -1,19 +1,20 @@
 import { useParams } from 'react-router-dom';
-import { Offers, City } from '../../types/offer';
+import { Offers } from '../../types/offer';
 import { Reviews } from '../../types/review';
 import FormComment from '../../components/form-comment/form-comment';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
+import { useAppSelector } from '../../hooks';
 
 type OfferProps = {
   offers: Offers;
   reviews: Reviews;
-  city: City;
 }
-function Offer({offers, reviews, city}: OfferProps): JSX.Element | null {
+function Offer({offers, reviews}: OfferProps): JSX.Element | null {
   const params = useParams();
   const offer = offers.find((el) => el.id === params.id);
+  const activeCity = useAppSelector((state) => state.city);
 
   if (!offer) {
     return null;
@@ -180,7 +181,7 @@ function Offer({offers, reviews, city}: OfferProps): JSX.Element | null {
           </div>
           <section className="offer__map">
             <Map
-              city={city}
+              city={activeCity}
               points={offers.slice(0, 3)}
             />
           </section>
