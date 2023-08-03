@@ -1,10 +1,7 @@
 import { City } from './types/offer';
 
-export const enum Settings {
-  offers = 500
-}
-
 export const enum AppRoute {
+  Root = '/',
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/'

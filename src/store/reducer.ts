@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, sortedOffersCity, filterOffer, loadOffers, setOffersDataLoadingStatus } from './action';
+import { changeCity, sortedOffersCity, filterOffer, loadOffers, setOffersDataLoadingStatus, requireAuthorization } from './action';
 import { Offers, City } from '../types/offer';
-import { CityMap } from '../const';
+import { CityMap, AuthorizationStatus } from '../const';
 
 type InitialState = {
   city: City;
@@ -9,6 +9,7 @@ type InitialState = {
   sortOffers: Offers;
   filterOffers: Offers;
   isOffersDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
 }
 
 const initialState: InitialState = {
@@ -17,12 +18,16 @@ const initialState: InitialState = {
   sortOffers: [],
   filterOffers: [],
   isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
@@ -45,7 +50,7 @@ const reducer = createReducer(initialState, (builder) => {
           state.filterOffers = state.sortOffers.sort((a, b) => b.rating - a.rating);
           break;
         default:
-          state.filterOffers = state.sortOffers;
+          state.filterOffers = state.sortOffers.slice();
       }
     });
 });
