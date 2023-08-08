@@ -1,21 +1,23 @@
 import { useParams } from 'react-router-dom';
-import { Offers } from '../../types/offer';
-import { Reviews } from '../../types/review';
 import FormComment from '../../components/form-comment/form-comment';
 import ReviewList from '../../components/review-list/review-list';
+import { useEffect } from 'react';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { fetchOfferAction } from '../../store/api-actions';
 import Header from '../../components/header/header';
 
-type OfferProps = {
-  offers: Offers;
-  reviews: Reviews;
-}
-function Offer({offers, reviews}: OfferProps): JSX.Element | null {
-  const params = useParams();
-  const offer = offers.find((el) => el.id === params.id);
-  const activeCity = useAppSelector((state) => state.city);
+function Offer(): JSX.Element | null {
+  const {id} = useParams();
+  const offer = useAppSelector((state) => state.currentOffer);
+  const reviews = useAppSelector((state) => state.reviews);
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOfferAction(id as string));
+  }, [dispatch, id]);
 
   if (!offer) {
     return null;
@@ -155,8 +157,8 @@ function Offer({offers, reviews}: OfferProps): JSX.Element | null {
           </div>
           <section className="offer__map">
             <Map
-              city={activeCity}
-              points={offers.slice(0, 3)}
+              city={offer.city}
+              points={offersNearby}
             />
           </section>
         </section>
@@ -165,7 +167,7 @@ function Offer({offers, reviews}: OfferProps): JSX.Element | null {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OfferList
               type='near'
-              offers={offers.slice(0, 3)}
+              offers={offersNearby}
             />
           </section>
         </div>

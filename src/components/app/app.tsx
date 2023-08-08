@@ -6,22 +6,16 @@ import Offer from '../../pages/offer/offer';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import PrivateRoute from '../private-route/private-route';
-import { Reviews } from '../../types/review';
 import Main from '../../pages/main/main';
 import LoadingScreen from '../../pages/loading-screen.tsx/loading-screen';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 
-type AppProps = {
-  reviews: Reviews;
-}
-
-function App({reviews}: AppProps): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const isQuestionsDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+function App(): JSX.Element {
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
   const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if (isQuestionsDataLoading) {
+  if (isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -40,7 +34,7 @@ function App({reviews}: AppProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={isAuthorizationStatus}>
-              <Favorites offers={offers} />
+              <Favorites />
             </PrivateRoute>
           }
         />
@@ -52,10 +46,7 @@ function App({reviews}: AppProps): JSX.Element {
           <Route
             path=':id'
             element={
-              <Offer
-                offers={offers}
-                reviews={reviews}
-              />
+              <Offer />
             }
           />
         </Route>

@@ -1,12 +1,7 @@
-import OfferList from '../../components/offer-list/offer-list';
-import { Offers } from '../../types/offer';
 import Header from '../../components/header/header';
 
-type FavoritesProps = {
-  offers: Offers;
-}
 
-function Favorites({offers}: FavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
   return (
     <div className="page">
       <Header />
@@ -15,10 +10,6 @@ function Favorites({offers}: FavoritesProps): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <OfferList
-              offers={offers}
-              onListItemHover={() => ''}
-            />
           </section>
         </div>
       </main>
