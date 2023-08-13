@@ -1,12 +1,13 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { Offers, DetailedOffer } from '../types/offer';
-import { Reviews } from '../types/review';
+import { Offers, Offer, DetailOffer } from '../types/offer';
+import { Reviews, Review } from '../types/review';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
+import { ReviewData } from '../types/review-data';
 import { dropToken, saveToken } from '../services/token';
-import { loadOffers, setOffersDataLoadingStatus, sortedOffersCity, requireAuthorization, redirectToRoute, loadOffer, loadReviews, loadOffersNearby } from './action';
+import { loadOffers, setOffersDataLoadingStatus, requireAuthorization, redirectToRoute, loadOffer, loadReviews, loadOffersNearby, setOfferDataLoadingStatus, addReview } from './action';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -15,13 +16,11 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'data/fetchOffers',
-  async (_arg, {dispatch, getState, extra: api}) => {
-    const {city} = getState();
+  async (_arg, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
     const {data} = await api.get<Offers>(APIRoute.Offers);
     dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadOffers(data));
-    dispatch(sortedOffersCity(city));
   }
 );
 
@@ -32,11 +31,11 @@ export const fetchOfferAction = createAsyncThunk<void, string, {
 }>(
   'data/fetchOffer',
   async (id, {dispatch, extra: api}) => {
-    dispatch(setOffersDataLoadingStatus(true));
-    const {data: dataOffer} = await api.get<DetailedOffer>(`${APIRoute.Offers}/${id}`);
+    dispatch(setOfferDataLoadingStatus(true));
+    const {data: dataOffer} = await api.get<DetailOffer>(`${APIRoute.Offers}/${id}`);
     const {data: dataReviews} = await api.get<Reviews>(`${APIRoute.Coments}/${id}`);
     const {data: dataOfferNearby} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
-    dispatch(setOffersDataLoadingStatus(false));
+    dispatch(setOfferDataLoadingStatus(false));
     dispatch(loadOffer(dataOffer));
     dispatch(loadReviews(dataReviews));
     dispatch(loadOffersNearby(dataOfferNearby));
@@ -70,6 +69,18 @@ export const loginAction = createAsyncThunk<void, AuthData, {
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(redirectToRoute(AppRoute.Root));
     }
+  }
+);
+
+export const postReview = createAsyncThunk<void, {reviewData: ReviewData; offerId: Offer['id']}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'offer/postReview',
+  async ({reviewData, offerId}, {dispatch, extra: api}) => {
+    const { data } = await api.post<Review>(`${APIRoute.Coments}/${offerId}`, reviewData);
+    dispatch(addReview(data));
   }
 );
 

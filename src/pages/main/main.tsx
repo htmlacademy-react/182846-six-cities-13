@@ -6,6 +6,7 @@ import Map from '../../components/map/map';
 import CityList from '../../components/city-list/city-list';
 import PlaceSort from '../../components/place-sort/place-sort';
 import { useAppSelector } from '../../hooks';
+import { sorting } from '../../utils/sort';
 
 function Main(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
@@ -13,7 +14,12 @@ function Main(): JSX.Element {
   );
 
   const activeCity = useAppSelector((state) => state.city);
-  const sortOffers = useAppSelector((state) => state.sortOffers);
+  const offers = useAppSelector((state) => state.offers);
+  const [currentSort, setCurrenSort] = useState('popular');
+
+  const sortOffers = offers
+    .slice()
+    .filter((item) => item.city.name === activeCity.name);
 
   const handleListItemHover = (id: string) => {
     const currentPoint = sortOffers.find((item) => item.id === id);
@@ -39,11 +45,11 @@ function Main(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{sortOffers.length} places to stay in {activeCity.name}</b>
-              <PlaceSort />
+              <PlaceSort onChange={(newSort) => setCurrenSort(newSort)} />
 
               <OfferList
                 type='cities'
-                offers={sortOffers}
+                offers={sorting[currentSort](sortOffers)}
                 onListItemHover={handleListItemHover}
               />
             </section>

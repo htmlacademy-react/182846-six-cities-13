@@ -1,6 +1,8 @@
+import Loader from '../../components/loader/loader';
+
 function LoadingScreen(): JSX.Element {
   return (
-    <p>Loading...</p>
+    <Loader />
   );
 }
 

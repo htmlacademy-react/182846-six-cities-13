@@ -28,7 +28,7 @@ export type Host = {
   avatarUrl: string;
 }
 
-export type DetailedOffer = {
+export type DetailOffer = {
   id: string;
   title: string;
   description: string;

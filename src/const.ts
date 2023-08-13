@@ -4,7 +4,8 @@ export const enum AppRoute {
   Root = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/'
+  Offer = '/offer/',
+  NotFound = '/not-found-screen'
 }
 
 export const enum AuthorizationStatus {
@@ -90,3 +91,10 @@ export const CityMap: Record<CityName, City> = {
     }
   },
 } as const;
+
+export const enum RequestStatus {
+  Unsent = 'UNSENT',
+  Pending = 'PENDING',
+  Success = 'SUCCESS',
+  Error = 'ERROR'
+}
