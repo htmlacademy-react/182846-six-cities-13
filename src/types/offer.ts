@@ -21,4 +21,29 @@ export type Location = {
   longitude: number;
   zoom: number;
 }
+
+export type Host = {
+  isPro: boolean;
+  name: string;
+  avatarUrl: string;
+}
+
+export type DetailOffer = {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+  price: number;
+  images: string[];
+  city: City;
+  location: Location;
+  goods: string[];
+  host: Host;
+  isPremium: boolean;
+  isFavorite: boolean;
+  rating: number;
+  bedrooms: number;
+  maxAdults: number;
+}
+
 export type Offers = Offer[];

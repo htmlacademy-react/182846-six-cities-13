@@ -39,6 +39,7 @@ function Login(): JSX.Element {
             <form
               className="login__form form"
               action="#"
+              method="post"
               onSubmit={handleSubmit}
             >
               <div className="login__input-wrapper form__input-wrapper">
