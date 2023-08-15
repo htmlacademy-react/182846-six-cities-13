@@ -27,7 +27,7 @@ export const months = [
 export const enum APIRoute {
   Offers = '/offers',
   Favorite = '/favorite',
-  Coments = '/comments',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout'
 }
@@ -97,4 +97,13 @@ export const enum RequestStatus {
   Pending = 'PENDING',
   Success = 'SUCCESS',
   Error = 'ERROR'
+}
+
+export const enum NameSpace {
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  NearPlaces = 'NEAR_PLACES',
+  Reviews = 'REVIEWS',
+  Favorites = 'FAVORITES',
+  User = 'USER'
 }

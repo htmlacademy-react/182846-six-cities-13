@@ -7,21 +7,22 @@ import CityList from '../../components/city-list/city-list';
 import PlaceSort from '../../components/place-sort/place-sort';
 import { useAppSelector } from '../../hooks';
 import { sorting } from '../../utils/sort';
+import { getOffers, getActiveCity } from '../../store/offers-data/selectors';
 
 function Main(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
 
-  const activeCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const activeCity = useAppSelector(getActiveCity);
+  const offers = useAppSelector(getOffers);
   const [currentSort, setCurrenSort] = useState('popular');
 
   const sortOffers = offers
     .slice()
     .filter((item) => item.city.name === activeCity.name);
 
-  const handleListItemHover = (id: string) => {
+  const handleListItemHover = (id: string | null) => {
     const currentPoint = sortOffers.find((item) => item.id === id);
 
     setSelectedPoint(currentPoint);
