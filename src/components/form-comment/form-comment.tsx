@@ -2,8 +2,8 @@ import { ChangeEvent, useState, useEffect, FormEvent, Fragment } from 'react';
 import { Offer } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-actions';
-import { dropSendingStatus } from '../../store/action';
 import { RequestStatus } from '../../const';
+import { getSendingStatusReview } from '../../store/reviews-data/selectors';
 
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 300;
@@ -27,7 +27,7 @@ function FormComment({offerId}: FormCommentProps): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dispatch = useAppDispatch();
-  const sendingStatus = useAppSelector((state) => state.sendingReviewStatus);
+  const sendingStatus = useAppSelector(getSendingStatusReview);
 
   const isValid =
     comment.length >= MIN_COMMENT_LENGTH &&
@@ -45,7 +45,7 @@ function FormComment({offerId}: FormCommentProps): JSX.Element {
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    dispatch(postReview({reviewData: {comment, rating: +rating}, offerId}));
+    dispatch(postReview({reviewData: {comment, rating: Number(rating)}, offerId}));
   };
 
   useEffect(() => {
@@ -53,7 +53,6 @@ function FormComment({offerId}: FormCommentProps): JSX.Element {
       case RequestStatus.Success:
         setComment('');
         setRating('');
-        dispatch(dropSendingStatus());
         break;
       case RequestStatus.Pending:
         setIsSubmitting(true);
