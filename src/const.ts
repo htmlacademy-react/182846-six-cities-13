@@ -107,3 +107,8 @@ export const enum NameSpace {
   Favorites = 'FAVORITES',
   User = 'USER'
 }
+
+export const enum FavoriteStatus {
+  Add = 1,
+  Delete = 0
+}

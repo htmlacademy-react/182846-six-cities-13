@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import classNames from 'classnames';
 
 const filterList = [
@@ -72,4 +72,4 @@ function PlaceSort({onChange}: PlaceSortProps) {
   );
 }
 
-export default PlaceSort;
+export const PlaceSortMemo = memo(PlaceSort);
