@@ -9,19 +9,10 @@ type OfferListProps = {
 }
 
 function OfferList({type, offers, onListItemHover}: OfferListProps): JSX.Element {
-  const handleCardMouseEnter = (id: string | null) => {
-    onListItemHover?.(id);
-  };
-
-  const handleCardMouseLeave = (id: string | null) => {
-    onListItemHover?.(id);
-  };
-
   const offerListClass = classNames({
     'places__list': true,
-    'cities__places-list': type === 'cities',
-    'near-places__list': type === 'near',
-    'tabs__content': type === 'cities'
+    'cities__places-list tabs__content': type === 'cities',
+    'near-places__list': type === 'near'
   });
 
   return (
@@ -30,8 +21,7 @@ function OfferList({type, offers, onListItemHover}: OfferListProps): JSX.Element
         <OfferCard
           key={offer.id}
           {...offer}
-          onCardMouseEnter={() => handleCardMouseEnter(offer.id)}
-          onCardMouseLeave={() => handleCardMouseLeave(null)}
+          onCardHover={onListItemHover}
         />)
       )}
     </div>
