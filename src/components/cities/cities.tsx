@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react';
-import {PlaceSortMemo as PlaceSort} from '../place-sort/place-sort';
-import OfferList from '../offer-list/offer-list';
+import { useState, useCallback, useMemo } from 'react';
+import { PlaceSortMemo as PlaceSort } from '../place-sort/place-sort';
+import { OfferListMemo as OfferList } from '../offer-list/offer-list';
 import Map from '../map/map';
 import { Offers, Offer, City } from '../../types/offer';
 import { sorting } from '../../utils/sort';
@@ -17,15 +17,19 @@ function Cities({offers, activeCity}: CitiesProps) {
 
   const [currentSort, setCurrenSort] = useState('popular');
 
-  const sortOffers = offers
-    .slice()
-    .filter((item) => item.city.name === activeCity.name);
+  const sortOffersByCity = useMemo(
+    () => offers.slice().filter((item) => item.city.name === activeCity.name),
+    [activeCity.name, offers]);
 
-  const handleListItemHover = (id: string | null) => {
-    const currentPoint = sortOffers.find((item) => item.id === id);
+  const sortOffersByCategory = useMemo(
+    () => sorting[currentSort](sortOffersByCity),
+    [currentSort, sortOffersByCity]);
+
+  const handleListItemHover = useCallback((id: string | null) => {
+    const currentPoint = sortOffersByCity.find((item) => item.id === id);
 
     setSelectedPoint(currentPoint);
-  };
+  }, [sortOffersByCity]);
 
   const handleChangeSort = useCallback((newSort: string) => {
     setCurrenSort(newSort);
@@ -36,12 +40,12 @@ function Cities({offers, activeCity}: CitiesProps) {
       <div className="cities__places-container container">
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">{sortOffers.length} places to stay in {activeCity.name}</b>
+          <b className="places__found">{sortOffersByCity.length} places to stay in {activeCity.name}</b>
           <PlaceSort onChange={handleChangeSort} />
 
           <OfferList
             type='cities'
-            offers={sorting[currentSort](sortOffers)}
+            offers={sortOffersByCategory}
             onListItemHover={handleListItemHover}
           />
         </section>
@@ -49,7 +53,7 @@ function Cities({offers, activeCity}: CitiesProps) {
           <section className="cities__map">
             <Map
               city={activeCity}
-              points={sortOffers}
+              points={sortOffersByCity}
               selectedPoint={selectedPoint}
             />
           </section>

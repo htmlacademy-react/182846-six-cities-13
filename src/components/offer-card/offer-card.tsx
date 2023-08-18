@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
@@ -58,6 +58,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
           <Bookmark
             id={id}
             isFavorite={activeFavorite}
+            type='place-card'
             onClick={() => setActiveFavorite((prev) => !prev)}
           />
         </div>
@@ -76,4 +77,4 @@ function OfferCard(props: OfferCardProps): JSX.Element {
   );
 }
 
-export default OfferCard;
+export const OfferCardMemo = memo(OfferCard);
