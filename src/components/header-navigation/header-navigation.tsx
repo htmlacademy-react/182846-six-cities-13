@@ -44,12 +44,12 @@ function HeaderNavigation() {
             </li>
           </>
           :
-          <li className="header__nav-item">
+          <li className="header__nav-item header__nav-link--profile">
             <Link
               className="header__nav-link"
               to={AppRoute.Login}
             >
-              <span className="header__signout">Sign in</span>
+              <span className="header__login">Sign in</span>
             </Link>
           </li>}
       </ul>

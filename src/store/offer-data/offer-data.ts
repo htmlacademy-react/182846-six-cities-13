@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../const';
 import { OfferData } from '../../types/state';
-import { fetchOfferAction } from '../api-actions';
+import { fetchOfferAction, addFavorite, deleteFavorite } from '../api-actions';
 
 const initialState: OfferData = {
   offer: null,
@@ -23,6 +23,16 @@ export const offerData = createSlice({
       })
       .addCase(fetchOfferAction.rejected, (state) => {
         state.fetchingStatusOffer = RequestStatus.Error;
+      })
+      .addCase(addFavorite.fulfilled, (state) => {
+        if (state.offer !== null) {
+          state.offer.isFavorite = true;
+        }
+      })
+      .addCase(deleteFavorite.fulfilled, (state) => {
+        if (state.offer !== null) {
+          state.offer.isFavorite = false;
+        }
       });
   },
 });

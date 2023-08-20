@@ -17,12 +17,12 @@ function LoginForm() {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       if (!regexEmail.test(loginRef.current.value)) {
-        toast.warn('Введите валидный Email');
+        toast.warn('Введите валидный Email', {autoClose: 300});
         return;
       }
 
       if (!regexPassword.test(passwordRef.current.value)) {
-        toast.warn('Введите валидный пароль');
+        toast.warn('Введите валидный пароль', {autoClose: 300});
         return;
       }
 

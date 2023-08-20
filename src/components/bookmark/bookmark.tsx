@@ -11,10 +11,9 @@ type BookmarkProps = {
   isFavorite: Offer['isFavorite'];
   type: string;
   large?: boolean;
-  onClick: () => void;
 }
 
-function Bookmark({ id, isFavorite, type, large = false, onClick }: BookmarkProps) {
+function Bookmark({ id, isFavorite, type, large = false }: BookmarkProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -24,10 +23,9 @@ function Bookmark({ id, isFavorite, type, large = false, onClick }: BookmarkProp
       navigate(AppRoute.Login);
     }
 
-    onClick();
-
     if (isFavorite) {
       dispatch(deleteFavorite(id));
+
     } else {
       dispatch(addFavorite(id));
     }
@@ -37,7 +35,7 @@ function Bookmark({ id, isFavorite, type, large = false, onClick }: BookmarkProp
     <button
       type="button"
       onClick={handleBookmarkClick}
-      className={classNames(`${type}__bookmark-button`, 'button', {[`${type}__bookmark-button--active`]: isFavorite}
+      className={classNames(`${type}__bookmark-button`, 'button', {[`${type}__bookmark-button--active`]: isFavorite && authorizationStatus === AuthorizationStatus.Auth}
       )}
     >
       <svg

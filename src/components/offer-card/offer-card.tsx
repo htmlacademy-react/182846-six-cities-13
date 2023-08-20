@@ -1,9 +1,10 @@
-import { useState, memo } from 'react';
+import { memo } from 'react';
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Bookmark from '../bookmark/bookmark';
 import classNames from 'classnames';
+import { capitalizedString } from '../../utils/utils';
 import './offer-card.css';
 
 type OfferCardProps = Offer & {
@@ -13,7 +14,6 @@ type OfferCardProps = Offer & {
 
 function OfferCard(props: OfferCardProps): JSX.Element {
   const {id, title, type, price, previewImage, isPremium, rating, isFavorite, onCardHover, favorite = false} = props;
-  const [activeFavorite, setActiveFavorite] = useState(isFavorite);
 
   const handleCardMouseEnter = () => {
     onCardHover?.(id);
@@ -57,9 +57,8 @@ function OfferCard(props: OfferCardProps): JSX.Element {
 
           <Bookmark
             id={id}
-            isFavorite={activeFavorite}
+            isFavorite={isFavorite}
             type='place-card'
-            onClick={() => setActiveFavorite((prev) => !prev)}
           />
         </div>
         <div className="place-card__rating rating">
@@ -71,7 +70,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizedString(type)}</p>
       </div>
     </article>
   );

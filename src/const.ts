@@ -15,13 +15,13 @@ export const enum AuthorizationStatus {
 }
 
 export const enum UrlMarker {
-  DefaultMarker = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-  CurrentMarker = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg'
+  DefaultMarker = '/img/pin.svg',
+  CurrentMarker = '/img/pin-active.svg'
 }
 
 export const months = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 export const enum APIRoute {

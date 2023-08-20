@@ -2,7 +2,7 @@ import Header from '../../components/header/header';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getFavorites } from '../../store/favorites-data/selectors';
 import { getFetchingStatusFavorites } from '../../store/favorites-data/selectors';
-import classNames from 'classnames';
+import cn from 'classnames';
 import { RequestStatus } from '../../const';
 import Loader from '../../components/loader/loader';
 import FavoritesOffers from '../../components/favorites-offers/favorites-offers';
@@ -41,15 +41,10 @@ function Favorites(): JSX.Element {
   }
 
   return (
-    <div className="page">
+    <div className={cn('page', {['page--favorites-empty']: isEmpty})}>
       <Header />
 
-      <main
-        className={classNames({
-          'page__main page__main--favorites': true,
-          'page__main--favorites-empty': isEmpty
-        })}
-      >
+      <main className={cn('page__main', 'page__main--favorites', {['page__main--favorites-empty']: isEmpty})}>
         {isEmpty ? <FavoritesOffersEmpty /> : <FavoritesOffers offers={Object.entries(favoriteByCity)} />}
       </main>
 
