@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { DetailOffer } from '../../types/offer';
 import Bookmark from '../bookmark/bookmark';
 import { capitalizedString } from '../../utils/utils';
@@ -8,6 +9,8 @@ type DetailedOfferProps = {
 }
 
 function DetailedOffer({offer}: DetailedOfferProps): JSX.Element {
+  const [activeFavorite, setActiveFavorite] = useState(offer.isFavorite);
+
   return (
     <>
       {offer.isPremium &&
@@ -21,9 +24,10 @@ function DetailedOffer({offer}: DetailedOfferProps): JSX.Element {
 
         <Bookmark
           id={offer.id}
-          isFavorite={offer.isFavorite}
+          isFavorite={activeFavorite}
           type='offer'
           large
+          onClick={() => setActiveFavorite((prev) => !prev)}
         />
       </div>
       <div className="offer__rating rating">

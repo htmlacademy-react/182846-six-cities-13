@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { useState, memo } from 'react';
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
@@ -14,6 +14,8 @@ type OfferCardProps = Offer & {
 
 function OfferCard(props: OfferCardProps): JSX.Element {
   const {id, title, type, price, previewImage, isPremium, rating, isFavorite, onCardHover, favorite = false} = props;
+
+  const [activeFavorite, setActiveFavorite] = useState(isFavorite);
 
   const handleCardMouseEnter = () => {
     onCardHover?.(id);
@@ -57,8 +59,9 @@ function OfferCard(props: OfferCardProps): JSX.Element {
 
           <Bookmark
             id={id}
-            isFavorite={isFavorite}
+            isFavorite={activeFavorite}
             type='place-card'
+            onClick={() => setActiveFavorite((prev) => !prev)}
           />
         </div>
         <div className="place-card__rating rating">

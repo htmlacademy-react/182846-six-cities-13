@@ -13,7 +13,6 @@ import browserHistory from '../../browser-history';
 import { getFetchingStatusOffers } from '../../store/offers-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
 
-
 function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector(getFetchingStatusOffers);
   const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
