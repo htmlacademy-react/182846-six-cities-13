@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import FormComment from '../../components/form-comment/form-comment';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
-import OfferList from '../../components/offer-list/offer-list';
+import { OfferListMemo as OfferList } from '../../components/offer-list/offer-list';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { fetchOfferAction, fetchReviewsAction, fetchOfferNearbyAction } from '../../store/api-actions';
+import { fetchOfferAction, fetchReviewsAction, fetchOfferNearbyAction, fetchFavoritesAction } from '../../store/api-actions';
 import Header from '../../components/header/header';
 import Loader from '../../components/loader/loader';
 import DetailedOffer from '../../components/detailed-offer/detailed-offer';
@@ -16,6 +16,7 @@ import { getOffer } from '../../store/offer-data/selectors';
 import { getReviews } from '../../store/reviews-data/selectors';
 import { getNearbyOffers } from '../../store/nearby-data/selectors';
 import { getFetchingStatusOffer } from '../../store/offer-data/selectors';
+import { getOffers } from '../../store/offers-data/selectors';
 
 function Offer(): JSX.Element {
   const {id: offerId} = useParams();
@@ -23,14 +24,23 @@ function Offer(): JSX.Element {
   const offer = useAppSelector(getOffer);
   const reviews = useAppSelector(getReviews);
   const offersNearby = useAppSelector(getNearbyOffers);
+  const offers = useAppSelector(getOffers);
   const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  const currentOffer = offers.find(({id}) => id === offerId);
+  const randomNearbyOffers = offersNearby.slice(0, 3);
+  const randomNearbyMap = offersNearby.slice(0, 3);
   const dispatch = useAppDispatch();
+
+  if (currentOffer) {
+    randomNearbyMap.push(currentOffer);
+  }
 
   useEffect(() => {
     if (offerId) {
       dispatch(fetchOfferAction(offerId));
       dispatch(fetchReviewsAction(offerId));
       dispatch(fetchOfferNearbyAction(offerId));
+      dispatch(fetchFavoritesAction());
     }
   }, [dispatch, offerId]);
 
@@ -62,7 +72,8 @@ function Offer(): JSX.Element {
           <section className="offer__map">
             <Map
               city={offer.city}
-              points={offersNearby}
+              points={randomNearbyMap}
+              selectedPoint={currentOffer}
             />
           </section>
         </section>
@@ -71,7 +82,7 @@ function Offer(): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <OfferList
               type='near'
-              offers={offersNearby}
+              offers={randomNearbyOffers}
             />
           </section>
         </div>

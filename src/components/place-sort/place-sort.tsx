@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import classNames from 'classnames';
 
-const filterList = [
+const filtersList = [
   {
     name: 'Popular',
     type: 'popular'
@@ -48,7 +48,7 @@ function PlaceSort({onChange}: PlaceSortProps) {
         </svg>
       </span>
       <ul className={placeSortClass}>
-        {filterList.map((item, i) => {
+        {filtersList.map((item, i) => {
           const keyValue = `${item.name}-${i}`;
           return (
             <li

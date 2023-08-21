@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-actions';
 import { RequestStatus } from '../../const';
 import { getSendingStatusReview } from '../../store/reviews-data/selectors';
+import { dropSendingStatusReview } from '../../store/reviews-data/reviews-data';
+import { toast } from 'react-toastify';
 
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 300;
@@ -49,17 +51,30 @@ function FormComment({offerId}: FormCommentProps): JSX.Element {
   };
 
   useEffect(() => {
-    switch (sendingStatus) {
-      case RequestStatus.Success:
-        setComment('');
-        setRating('');
-        break;
-      case RequestStatus.Pending:
-        setIsSubmitting(true);
-        break;
-      default:
-        setIsSubmitting(false);
+    let isMounted = true;
+
+    if (isMounted) {
+      switch (sendingStatus) {
+        case RequestStatus.Success:
+          setComment('');
+          setRating('');
+          dispatch(dropSendingStatusReview());
+          break;
+        case RequestStatus.Pending:
+          setIsSubmitting(true);
+          break;
+        case RequestStatus.Error:
+          toast.warn('Комментарий не отправлен');
+          setIsSubmitting(false);
+          break;
+        default:
+          setIsSubmitting(false);
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [sendingStatus, dispatch]);
 
   return (
@@ -70,9 +85,6 @@ function FormComment({offerId}: FormCommentProps): JSX.Element {
       onSubmit={handleFormSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-
-      {sendingStatus === RequestStatus.Error &&
-        <p>Комментарий не отправлен</p>}
 
       <div className="reviews__rating-form form__rating">
         {Object.entries(ratingMap)
