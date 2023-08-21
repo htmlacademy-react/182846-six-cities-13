@@ -5,7 +5,7 @@ import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import { OfferListMemo as OfferList } from '../../components/offer-list/offer-list';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { fetchOfferAction, fetchReviewsAction, fetchOfferNearbyAction } from '../../store/api-actions';
+import { fetchOfferAction, fetchReviewsAction, fetchOfferNearbyAction, fetchFavoritesAction } from '../../store/api-actions';
 import Header from '../../components/header/header';
 import Loader from '../../components/loader/loader';
 import DetailedOffer from '../../components/detailed-offer/detailed-offer';
@@ -40,6 +40,7 @@ function Offer(): JSX.Element {
       dispatch(fetchOfferAction(offerId));
       dispatch(fetchReviewsAction(offerId));
       dispatch(fetchOfferNearbyAction(offerId));
+      dispatch(fetchFavoritesAction());
     }
   }, [dispatch, offerId]);
 
