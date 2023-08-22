@@ -1,4 +1,4 @@
-import Review from '../review/review';
+import ReviewCard from '../review-card/review-card';
 import { Reviews } from '../../types/review';
 
 const MAX_REVIEWS_QUANTITY = 10;
@@ -18,7 +18,7 @@ function ReviewList({reviews}: ReviewListProps): JSX.Element {
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
         {sortReviews.map((review) => (
-          <Review
+          <ReviewCard
             key={review.id}
             {...review}
           />)
